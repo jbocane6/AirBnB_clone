@@ -14,7 +14,7 @@
 
   ## First step: Command interpreter to manage AirBnB objects.
 
-  ### This is the first step towards building the first full web application: the AirBnB clone. This first step is very important because it will use what it builds during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration…
+  This is the first step towards building the first full web application: the AirBnB clone. This first step is very important because it will use what it builds during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration…
 
   ## Each task is linked and will help to:
 

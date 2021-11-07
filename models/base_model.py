@@ -22,7 +22,6 @@ class BaseModel():
         """Assigns with the current datetime when an instance is created and
         it will be updated every time the object is changed"""
         self.updated_at = datetime.now()
-        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values

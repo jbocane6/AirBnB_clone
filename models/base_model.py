@@ -1,47 +1,46 @@
 #!/usr/bin/python3
-"""Defines all common attributes/methods for other classes."""
-import models
-import uuid
-from datetime import datetime
+"""Serializes instances to a JSON file
+and deserializes JSON file to instances."""
+import json
+from models.base_model import BaseModel
 
 
-class BaseModel():
-    """Defines all common attributes/methods."""
+class FileStorage():
+    """Serializes instances to a JSON file
+    and deserializes JSON file to instances."""
+    __file_path = "file.json"
+    __objects = {}
 
-    def __init__(self, *args, **kwargs):
-        """Defines all common attributes.
+    def all(self):
+        """Returns the dictionary __objects"""
+        return FileStorage.__objects
+
+    def new(self, obj):
+        """Sets in __objects the obj with key <obj class name>.id
         Args:
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments."""
-        if kwargs:
-            for key, value in kwargs.items():
-                if key != "__class__":
-                    if key in ["created_at", "updated_at"]:
-                        value = datetime.strptime(value,
-                                                  '%Y-%m-%dT%H:%M:%S.%f')
-                    setattr(self, key, value)
-        else:            
-            self.id = str(uuid.uuid4())
-            self.created_at = self.updated_at = datetime.now()
-            models.storage.new(self)
-
-    def __str__(self):
-        """Returns info about class."""
-        return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+            obj (object): Object to get id.
+        """
+        key = "{}.{}".format(type(obj).__name__, obj.id)
+        FileStorage.__objects[key] = obj
 
     def save(self):
-        """Assigns with the current datetime when an instance is created and
-        it will be updated every time the object is changed"""
-        self.updated_at = datetime.now()
-        models.storage.save()
-        
+        """Serializes __objects to the JSON file (path: __file_path)"""
+        with open(FileStorage.__file_path, "w") as f:
+            if FileStorage.__objects is not None:
+                dict_json = {obj_key: obj_val.to_dict()for obj_key, obj_val
+                             in FileStorage.__objects.items()}
+                json.dump(dict_json, f)
 
-    def to_dict(self):
-        """Returns a dictionary containing all keys/values
-        of __dict__ of the instance"""
-        base_dict = self.__dict__.copy()
-        base_dict["__class__"] = type(self).__name__
-        base_dict["created_at"] = self.created_at.isoformat()
-        base_dict["updated_at"] = self.updated_at.isoformat()
-        return base_dict
+    def reload(self):
+        """Deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists ; otherwise, do nothing.
+        If the file doesn’t exist, no exception should be raised)
+        """
+        try:
+            with open(FileStorage.__file_path, "r") as f:
+                data = json.load(f)
+                for key, val in data.items():
+                    val = eval(key.split(".")[0])(**val)
+                    FileStorage.__objects[key] = val
+        except FileNotFoundError:
+            pass

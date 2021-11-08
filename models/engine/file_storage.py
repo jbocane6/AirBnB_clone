@@ -20,7 +20,6 @@ class FileStorage():
             obj (object): Object to get id.
         """
         key = "{}.{}".format(type(obj).__name__, obj.id)
-        print("{}".format(key))
         self.__objects[key] = obj
 
     def save(self):

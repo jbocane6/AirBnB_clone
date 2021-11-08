@@ -8,6 +8,10 @@ class HBNBCommand(cmd.Cmd):
     """Contains the entry point of the command interpreter."""
     prompt = "(hbnb) "
 
+    def emptyline(self):
+        """When there is an empty line + ENTER shouldn’t execute anything."""
+        pass
+
     def do_quit(self, arg):
         """Quit command to exit the program."""
         return True

@@ -4,7 +4,7 @@ and deserializes JSON file to instances."""
 import json
 
 
-class FileStorage():
+class FileStorage:
     """Serializes instances to a JSON file
     and deserializes JSON file to instances."""
     __file_path = "file.json"
@@ -12,7 +12,7 @@ class FileStorage():
 
     def all(self):
         """Returns the dictionary __objects"""
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id
@@ -20,14 +20,14 @@ class FileStorage():
             obj (object): Object to get id.
         """
         key = "{}.{}".format(type(obj).__name__, obj.id)
-        self.__objects[key] = obj
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
-        with open(self.__file_path, "w", encoding="utf-8") as f:
-            if self.__objects is not None:
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
+            if FileStorage.__objects is not None:
                 dict_json = {obj_key: obj_val.to_dict()for obj_key, obj_val
-                             in self.__objects.items()}
+                             in FileStorage.__objects.items()}
                 json.dump(dict_json, f)
 
     def reload(self):
@@ -36,10 +36,10 @@ class FileStorage():
         If the file doesn’t exist, no exception should be raised)
         """
         try:
-            with open(self.__file_path, "r", encoding="utf-8") as f:
+            with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 for key, val in data.items():
                     val = eval(key.split(".")[0])(**val)
-                    self.__objects[key] = val
+                    FileStorage.__objects[key] = val
         except FileNotFoundError:
-            pass
+            return

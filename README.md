@@ -84,7 +84,7 @@
     (hbnb) quit
     $
     ```
-  - **No interactive mode:**
+  - ### No interactive mode:
 
     ```
     $ echo "help" | ./console.py
@@ -101,12 +101,12 @@
 
     This console supports the folow commands:
 
-    - **create:** `create <class>`
-    - **show:** `show <class> <id>` or `<class>.show(<id>)`
-    - **destroy:** `destroy <class> <id>` or `<class>.destroy(<id>)`
-    - **all:** `all` or `all <class>` or `<class>.all()`
-    - **count:** `count <class>` or `<class>.count()`
-    - **update:** `update <class> <id> <attribute name> "<attribute value>"` or
+    - **create**: `create <class>`
+    - **show**: `show <class> <id>` or `<class>.show(<id>)`
+    - **destroy**: `destroy <class> <id>` or `<class>.destroy(<id>)`
+    - **all**: `all` or `all <class>` or `<class>.all()`
+    - **count**: `count <class>` or `<class>.count()`
+    - **update**: `update <class> <id> <attribute name> "<attribute value>"` or
     `<class>.update(<id>, <attribute name>, <attribute value>)` or `<class>.update(<id>, <attribute dictionary>)`
 
   ## Authors

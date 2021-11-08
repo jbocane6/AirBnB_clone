@@ -66,3 +66,49 @@
   - All classes should have a documentation (python3 -c 'print(__import__("my_module").MyClass.__doc__)')
   - All functions (inside and outside a class) should have a documentation (python3 -c 'print(__import__("my_module").my_function.__doc__)' and python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)')
   - Is strongly encourage to work together on test cases, so that doesn’t miss any edge case
+
+  ## How to use
+
+  - ### Interactive mode
+    ```
+    $ ./console.py
+    (hbnb) help
+
+    Documented commands (type help <topic>):
+    ========================================
+    EOF  all  count  create  destroy  help  quit  show  update
+
+    (hbnb) User.count()
+    0 
+    (hbnb) 
+    (hbnb) quit
+    $
+    ```
+  - **No interactive mode:**
+
+    ```
+    $ echo "help" | ./console.py
+    (hbnb) 
+    Documented commands (type help <topic>):
+    ========================================
+    EOF  all  count  create  destroy  help  quit  show  update
+
+    (hbnb) 
+    $
+    ```
+
+  ### Commands
+
+    This console supports the folow commands:
+
+    - **create:** `create <class>`
+    - **show:** `show <class> <id>` or `<class>.show(<id>)`
+    - **destroy:** `destroy <class> <id>` or `<class>.destroy(<id>)`
+    - **all:** `all` or `all <class>` or `<class>.all()`
+    - **count:** `count <class>` or `<class>.count()`
+    - **update:** `update <class> <id> <attribute name> "<attribute value>"` or
+    `<class>.update(<id>, <attribute name>, <attribute value>)` or `<class>.update(<id>, <attribute dictionary>)`
+
+  ## Authors
+
+   - Juan Camilo Bocanegra Osorio

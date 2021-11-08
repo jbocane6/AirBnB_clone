@@ -42,4 +42,4 @@ class FileStorage:
                     val = eval(key.split(".")[0])(**val)
                     FileStorage.__objects[key] = val
         except FileNotFoundError:
-            return
+            pass

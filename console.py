@@ -155,5 +155,18 @@ class HBNBCommand(cmd.Cmd):
                 arg_list[3])
         obj.save()
 
+    def do_count(self, arg):
+        """Retrieve all instances of a class"""
+        arg_list = arg.split(" ") if type(arg) == str else arg
+        if not arg:
+            print("** class name missing **")
+            return
+        if arg_list[0] not in HBNBCommand.class_list:
+            print("** class doesn't exist **")
+            return
+        objs = [key for key in map(lambda x: x.split(".")[0],
+                                   storage.all().keys())]
+        print(objs.count(arg_list[0]))
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -3,6 +3,7 @@
 of the command interpreter:."""
 import cmd
 import shlex
+import json
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -167,6 +168,43 @@ class HBNBCommand(cmd.Cmd):
         objs = [key for key in map(lambda x: x.split(".")[0],
                                    storage.all().keys())]
         print(objs.count(arg_list[0]))
+
+    def default(self, line):
+        """"""
+        lexer = shlex.shlex(line)
+        lexer.wordchars += "-"
+        lexer = list(lexer)
+        arg = []
+        func_name = ""
+        idx = 0
+        in_paren = False
+
+        while idx < len(lexer):
+            if lexer[idx][0].islower() is True and func_name == "":
+                func_name = lexer[idx]
+            elif in_paren is True:
+                if lexer[idx] == "[":
+                    idx_start = lexer.index("[")
+                    idx_end = lexer.index("]")
+                    list_str = "".join(lexer[idx_start:idx_end + 1])
+                    arg.append(eval(list_str))
+                    idx = idx_end
+                if lexer[idx] == "{":
+                    dict_str = "".join(lexer[idx:-1])
+                    dict_str = dict_str.replace("'", '"')
+                    arg.append(json.loads(dict_str))
+                    idx = len(lexer) - 1
+                if lexer[idx] not in ",)":
+                    arg.append(lexer[idx].replace('"', "").replace("'", ""))
+            elif lexer[idx] == "(":
+                in_paren = True
+            elif lexer[idx] != ".":
+                arg.append(lexer[idx].replace('"', "").replace("'", ""))
+            idx += 1
+
+        cmd_list = ("all", "count", "show", "destroy", "update")
+        if func_name in cmd_list:
+            eval("self.do_" + func_name + "(arg)")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

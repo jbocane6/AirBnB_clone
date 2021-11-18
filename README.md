@@ -9,7 +9,7 @@
   <p align="center">
     <a href=#><img src="https://raw.githubusercontent.com/jbocane6/logos/main/Airbnb.png" alt="titulo" /></a></p>
   
-  # 0x00. AirBnB clone - The console
+  # AirBnB clone
   ## Welcome to the AirBnB clone project!
 
   ## First step: Command interpreter to manage AirBnB objects.
